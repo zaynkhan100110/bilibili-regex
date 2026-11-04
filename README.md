@@ -1,11 +1,31 @@
 
 # Bilibili Regex
 
-A Python-based Bilibili video identifier and metadata extractor.
+**A Python-based Bilibili video identifier and metadata extractor.**
 
-`bilibili.py` extracts Bilibili video identifiers, retrieves video metadata through Bilibili's public web API, identifies the CID for individual video parts, and generates embeddable player URLs and HTML iframes.
+[![Python](https://img.shields.io/badge/Python-3.9%2B-blue)](https://www.python.org/)
+[![Requests](https://img.shields.io/badge/HTTP-Requests-green)](https://requests.readthedocs.io/)
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)](#requirements)
 
-It supports standard Bilibili video links, BV identifiers, AV identifiers, short links from `b23.tv`, and multi-part videos.
+**Repository:** https://github.com/zaynkhan100110/bilibili-regex
+
+---
+
+## Overview
+
+Bilibili Regex is a lightweight Python command-line utility designed to extract Bilibili video identifiers and retrieve video metadata through Bilibili's public web API.
+
+The main script, `bilibili.py`, extracts Bilibili video identifiers, retrieves video metadata, identifies the CID for individual video parts, and generates embeddable player URLs and HTML iframes.
+
+It supports:
+
+- Standard Bilibili video URLs.
+- BV identifiers.
+- AV identifiers.
+- Short links from `b23.tv`.
+- Multi-part videos.
+
+The project uses Python regular expressions and HTTP requests to identify videos and retrieve their publicly available metadata.
 
 ## Features
 
@@ -22,15 +42,72 @@ It supports standard Bilibili video links, BV identifiers, AV identifiers, short
 - **Timeout handling** — Allows configurable HTTP request timeouts.
 - **Error handling** — Handles invalid links, API errors, network failures, and unavailable pages.
 
+## Project Structure
+
+```text
+bilibili-regex/
+│
+├── bilibili.py
+├── requirements.txt
+├── README.md
+├── .gitignore
+└── LICENSE
+```
+
 ## Requirements
 
-- Python 3.9 or newer
-- Internet connection
-- `requests`
+Before installing Bilibili Regex, make sure you have:
+
+| Requirement | Version | Purpose |
+|---|---|---|
+| Python | 3.9 or newer | Runs the extraction script |
+| pip | Latest recommended | Installs Python packages |
+| Requests | 2.31.0 or newer | Sends HTTP requests to Bilibili |
+| Internet connection | Required | Accesses Bilibili's public API |
+
+### Supported operating systems
+
+- Windows 10 or newer
+- Linux
+- macOS
+
+### Python dependencies
+
+This project uses the following Python package:
+
+```text
+requests>=2.31.0,<3.0.0
+```
+
+All Python dependencies are listed in `requirements.txt`.
+
+No browser automation or separate browser installation is required by the documented implementation.
 
 ## Installation
 
-Clone the repository:
+Follow these steps to install and configure Bilibili Regex.
+
+### 1. Install Python
+
+Download Python 3.9 or newer:
+
+https://www.python.org/downloads/
+
+Verify your installation:
+
+```bash
+python --version
+```
+
+On some Linux/macOS systems, use:
+
+```bash
+python3 --version
+```
+
+### 2. Clone the repository
+
+Using Git:
 
 ```bash
 git clone https://github.com/zaynkhan100110/bilibili-regex.git
@@ -42,19 +119,77 @@ Enter the project directory:
 cd bilibili-regex
 ```
 
-Install the dependency:
+Alternatively, download the repository as a ZIP from GitHub and extract it.
 
-```bash
-python -m pip install requests
+### 3. Create a virtual environment
+
+A virtual environment keeps project dependencies isolated from other Python projects.
+
+**Windows:**
+
+```powershell
+py -m venv .venv
+.venv\Scripts\Activate.ps1
 ```
 
-Alternatively, install dependencies from a requirements file if you add one:
+If PowerShell blocks activation, use Command Prompt:
+
+```cmd
+.venv\Scripts\activate.bat
+```
+
+**Linux / macOS:**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 4. Upgrade pip
+
+```bash
+python -m pip install --upgrade pip
+```
+
+### 5. Install Python dependencies
+
+Install the packages listed in `requirements.txt`:
 
 ```bash
 python -m pip install -r requirements.txt
 ```
 
+Alternatively, install Requests directly:
+
+```bash
+python -m pip install requests
+```
+
+### 6. Verify installation
+
+Check that Requests is installed:
+
+```bash
+python -m pip show requests
+```
+
+### 7. Run Bilibili Regex
+
+You are now ready to use the script:
+
+```bash
+python bilibili.py "https://www.bilibili.com/video/BV1xx411c7mD"
+```
+
+For available options:
+
+```bash
+python bilibili.py --help
+```
+
 ## Usage
+
+The main script is named `bilibili.py`.
 
 ### Standard Bilibili URL
 
@@ -88,9 +223,11 @@ python bilibili.py "https://b23.tv/example"
 
 The script follows the short-link redirect and extracts the video identifier from the resulting Bilibili URL.
 
-### Select a video part
+## Multi-Part Video Support
 
-Bilibili supports multi-part videos. Use `--page` to select a particular part.
+Bilibili supports videos containing multiple parts.
+
+Use `--page` to select a particular part.
 
 ```bash
 python bilibili.py "https://www.bilibili.com/video/BV1xx411c7mD" --page 2
@@ -98,9 +235,11 @@ python bilibili.py "https://www.bilibili.com/video/BV1xx411c7mD" --page 2
 
 The page number is one-based:
 
-- `--page 1` selects the first part.
-- `--page 2` selects the second part.
-- `--page 3` selects the third part.
+| Option | Selected part |
+|---|---|
+| `--page 1` | First part |
+| `--page 2` | Second part |
+| `--page 3` | Third part |
 
 You can also use Bilibili's URL parameter:
 
@@ -111,6 +250,15 @@ python bilibili.py "https://www.bilibili.com/video/BV1xx411c7mD?p=2"
 An explicit `--page` option takes precedence over the URL's `p` parameter.
 
 If the requested page does not exist, the script reports an error instead of silently selecting another part.
+
+## Command-Line Options
+
+| Option | Description |
+|---|---|
+| `url` | Bilibili URL, BV identifier, AV identifier, or short link |
+| `--page` | Selects a specific video part |
+| `--timeout` | Configures the HTTP request timeout |
+| `--json` | Returns structured JSON output |
 
 ### Configure the HTTP timeout
 
@@ -172,21 +320,23 @@ The normal output includes:
 | Player URL | Bilibili embedded-player URL |
 | Iframe | HTML embed markup |
 
-## How it works
+## How It Works
 
-### 1. Input processing
+### 1. Input Processing
 
 The script accepts a Bilibili URL, short link, BV identifier, or AV identifier.
 
-### 2. Short-link resolution
+### 2. Short-Link Resolution
 
 For `b23.tv` links, the script follows HTTP redirects to obtain the final Bilibili URL.
 
-### 3. Identifier extraction
+### 3. Identifier Extraction
 
-Regular expressions identify BV and AV identifiers. URL query parameters are also checked for identifiers.
+Regular expressions identify BV and AV identifiers.
 
-### 4. Video metadata retrieval
+URL query parameters are also checked for identifiers.
+
+### 4. Video Metadata Retrieval
 
 The script requests:
 
@@ -196,7 +346,7 @@ https://api.bilibili.com/x/web-interface/view
 
 This endpoint provides video metadata, including canonical identifiers and page information.
 
-### 5. Page and CID retrieval
+### 5. Page and CID Retrieval
 
 The script uses the page information returned by the video metadata endpoint.
 
@@ -208,7 +358,7 @@ https://api.bilibili.com/x/player/pagelist
 
 The selected page's CID is then used to construct the player URL.
 
-### 6. Player generation
+### 6. Player Generation
 
 The script generates a URL in this format:
 
@@ -218,37 +368,18 @@ https://player.bilibili.com/player.html?bvid=VIDEO_BVID&cid=VIDEO_CID
 
 It also generates HTML iframe markup using that URL.
 
-## Project structure
+## API Endpoints
 
-```text
-bilibili-regex/
-│
-├── bilibili.py
-├── README.md
-├── requirements.txt
-└── .gitignore
-```
+The script uses these Bilibili endpoints:
 
-### Optional requirements.txt
+| Endpoint | Purpose |
+|---|---|
+| `/x/web-interface/view` | Retrieve video metadata |
+| `/x/player/pagelist` | Retrieve video parts and CID values |
 
-```text
-requests>=2.31.0,<3.0.0
-```
+These are Bilibili API endpoints, not endpoints hosted by this project.
 
-### Optional .gitignore
-
-```gitignore
-__pycache__/
-*.py[cod]
-.venv/
-venv/
-.env
-.idea/
-.vscode/
-.DS_Store
-```
-
-## Error handling
+## Error Handling
 
 The script handles common failures:
 
@@ -264,35 +395,20 @@ The script handles common failures:
 
 Some videos may be unavailable because of privacy settings, region restrictions, deleted content, account restrictions, or changes to Bilibili's API.
 
-## Limitations
-
-- This project extracts identifiers and metadata; it does not download video files.
-- It does not extract direct video or audio stream URLs.
-- It does not bypass login requirements, geographic restrictions, or access controls.
-- Bilibili may change its API behavior or response structure.
-- Some videos may not be accessible through the public API.
-- Generated iframe URLs depend on Bilibili's player and embedding policies.
-- The availability of embedded playback may depend on the video, account, region, and browser.
-
-## API endpoints
-
-The script uses these Bilibili endpoints:
-
-| Endpoint | Purpose |
-|---|---|
-| `/x/web-interface/view` | Retrieve video metadata |
-| `/x/player/pagelist` | Retrieve video parts and CID values |
-
-These are Bilibili API endpoints, not endpoints hosted by this project.
-
 ## Troubleshooting
 
-### requests is not installed
+### Requests is not installed
 
 Run:
 
 ```bash
 python -m pip install requests
+```
+
+Or install all dependencies:
+
+```bash
+python -m pip install -r requirements.txt
 ```
 
 ### The video cannot be found
@@ -314,13 +430,42 @@ Check the video's available parts and use a valid one-based page number.
 
 ### The player does not load
 
-Open the generated player URL in a browser. If it still fails, the video may have embedding restrictions or require access that the public player does not provide.
+Open the generated player URL in a browser.
 
-## Responsible use
+If it still fails, the video may have embedding restrictions or require access that the public player does not provide.
+
+### Network request errors
+
+Check your internet connection and try again.
+
+If the problem continues, the Bilibili API may be temporarily unavailable or may have changed its response behavior.
+
+## Limitations
+
+- This project extracts identifiers and metadata; it does not download video files.
+- It does not extract direct video or audio stream URLs.
+- It does not bypass login requirements, geographic restrictions, or access controls.
+- Bilibili may change its API behavior or response structure.
+- Some videos may not be accessible through the public API.
+- Generated iframe URLs depend on Bilibili's player and embedding policies.
+- The availability of embedded playback may depend on the video, account, region, and browser.
+
+## Security and Responsible Use
 
 Use this project in accordance with Bilibili's terms, applicable laws, and the rights of video creators.
 
-Respect copyright, privacy, rate limits, and access restrictions. Do not use this project to circumvent platform protections or download content without authorization.
+Respect:
+
+- Copyright.
+- Creator rights.
+- Privacy.
+- API rate limits.
+- Access restrictions.
+- Applicable content distribution laws.
+
+Do not use this project to circumvent platform protections or download content without authorization.
+
+Do not publish authentication tokens, cookies, or private account information in bug reports.
 
 ## Contributing
 
@@ -334,13 +479,18 @@ When submitting changes:
 4. Document new command-line options.
 5. Test standard URLs, short links, BV IDs, AV IDs, and multi-part videos.
 
-
-## Note
-
-This script is a part of my <a href="https://github.com/zaynkhan100110/ump">ump</a>
+Pull requests improving extraction accuracy, API handling, error handling, testing, and documentation are welcome.
 
 ## License
 
 See the repository's LICENSE file for licensing information.
 
 ---
+
+**Repository:** https://github.com/zaynkhan100110/bilibili-regex
+
+**Main script:** `bilibili.py`
+
+**Documentation:** `README.md`
+
+This script is a part of my [UMP](https://github.com/zaynkhan100110/ump) project.
