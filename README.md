@@ -340,4 +340,7 @@ When submitting changes:
 This script is a part of my <a href="https://github.com/zaynkhan100110/ump">ump</a>
 
 ## License
-Don't sell it
+
+See the repository's LICENSE file for licensing information.
+
+---
