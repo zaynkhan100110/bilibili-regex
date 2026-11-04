@@ -12,4 +12,4 @@ This automated scripts use playwright (a browserlike application and send reques
 
 ## Notice :::
 
-Bilibili may update their regex again so keep updating this script. Also private video may not be foundable with this script
+Bilibili may update their regex again so keep updating this script. Also private video may not be unreachable with this script
