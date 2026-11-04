@@ -334,7 +334,10 @@ When submitting changes:
 4. Document new command-line options.
 5. Test standard URLs, short links, BV IDs, AV IDs, and multi-part videos.
 
-## License
 
-No license is implied by this README. Add a `LICENSE` file to the repository if you intend to distribute the project under a specific open-source license.
-```
+## Note
+
+This script is a part of my <a href="https://github.com/zaynkhan100110/ump">ump</a>
+
+## License
+Don't sell it
