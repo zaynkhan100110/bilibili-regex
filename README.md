@@ -1,5 +1,5 @@
 
-# Bilibili Regex
+<h1 align="center">Bilibili Regex</h1>
 
 **A Python-based Bilibili video identifier and metadata extractor.**
 
@@ -7,7 +7,6 @@
 [![Requests](https://img.shields.io/badge/HTTP-Requests-green)](https://requests.readthedocs.io/)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey)](#requirements)
 
-**Repository:** https://github.com/zaynkhan100110/bilibili-regex
 
 ---
 
